@@ -1,0 +1,35 @@
+
+service: jenkinsless
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  memorySize: 256
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource:
+        - "arn:aws:s3:::*"
+
+functions:
+  optimize:
+    handler: optimize.handle
+    environment:
+      bucket: jenkinsless
+    events:
+      - s3:
+          bucket: jenkinsless
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .jpg
+      - s3:
+          bucket: jenkinsless
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .png
