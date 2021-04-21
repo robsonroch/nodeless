@@ -4,7 +4,9 @@
   "description": "",
   "main": "optimize.js",
   "scripts": {
-    "build": "rm -rf node_modules && npm install --platform=linux --arch=x64",
+    "predeploy": "npm install --platform=linux --arch=x64",
+    "deploy": "serverless deploy -v",
+    "postdeploy": "rm -rf node_modules"
   },
   "keywords": [],
   "author": "",
