@@ -10,6 +10,7 @@ module.exports.handle = async ({ Records: records }, context) => {
   try {
     await Promise.all(
       records.map(async record => {
+        console.log("Teste de deploy");
         const { key } = record.s3.object;
 
         const image = await S3.getObject({
